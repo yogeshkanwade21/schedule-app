@@ -1,9 +1,9 @@
-const express = require('express');
-const userRouter = require('./routes/user');
-const eventRouter = require('./routes/events');
-const mongoose = require('mongoose');
-const cors = require("cors");
-const bodyParser = require('body-parser');
+import express from 'express';
+import userRouter from './routes/user.js';
+import eventRouter from './routes/events.js';
+import mongoose from 'mongoose';
+import cors from "cors";
+import bodyParser from'body-parser';
 const app = express();
 const PORT = 3001;
 
@@ -30,3 +30,5 @@ const server = app.listen(PORT, ()=> {
 server.on('error', (err)=> {
     console.log(`error: ${err.message}`);
 });
+
+export default server;

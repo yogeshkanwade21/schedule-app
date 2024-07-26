@@ -1,5 +1,5 @@
-const { Schema, model } = require('mongoose');
-const User = require('./user');
+import { Schema, model } from 'mongoose';
+import User from './user.js';
 
 const eventSchema = new Schema({
     eventName: {
@@ -29,4 +29,4 @@ const eventSchema = new Schema({
 
 const Event = model('Event', eventSchema);
 
-module.exports = Event;
+export default Event;

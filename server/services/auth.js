@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
 const secretPhrase = 'mYsecreTphrasEfoRsecreTtoken';
 
@@ -16,4 +16,4 @@ function createTokenForUser(user) {
     return token;
 }
 
-module.exports = {createTokenForUser};
+export default createTokenForUser;
