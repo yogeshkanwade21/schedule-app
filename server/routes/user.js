@@ -1,7 +1,7 @@
-const { Router } = require('express');
+import { Router } from 'express';
 const router = Router();
-const User = require('../models/user');
-const jwt = require('jsonwebtoken');
+import User from '../models/user.js';
+import jwt from 'jsonwebtoken';
 const secretPhrase = 'mYsecreTphrasEfoRsecreTtoken';
 
 router.post('/login', async (req, res) => {
@@ -65,4 +65,4 @@ router.post('/signup', async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

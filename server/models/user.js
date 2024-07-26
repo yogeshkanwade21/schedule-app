@@ -1,6 +1,6 @@
-const { Schema, model } = require('mongoose');
-const { createHmac, randomBytes } = require('node:crypto');
-const { createTokenForUser } = require('../services/auth');
+import { Schema, model } from 'mongoose';
+import { createHmac, randomBytes } from'node:crypto';
+import createTokenForUser from'../services/auth.js';
 
 const userSchema = new Schema({
     name: {
@@ -65,4 +65,4 @@ userSchema.static('matchPasswordAndGenerateToken', async function (email, passwo
 })
 
 const User = model('User', userSchema);
-module.exports = User;
+export default User;
