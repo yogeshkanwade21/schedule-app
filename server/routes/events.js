@@ -2,6 +2,58 @@ import { Router } from 'express';
 const router = Router();
 import Event from '../models/event.js';
 
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      Event:
+ *          type: object
+ *          properties:
+ *              eventName:
+ *                  type: string
+ *              date:
+ *                  type: string
+ *              fromTime:
+ *                  type: string
+ *              toTime:
+ *                  type: string
+ *              createdBy:
+ *                  type: string
+ *          required:
+ *              - eventName
+ *              - date
+ *              - fromTime
+ *              - toTime
+ *              - createdBy
+ */
+
+/** 
+ * @swagger
+ * /event/add:
+ *   post:
+ *     summary: Add an Event
+ *     tags: [Event]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Event'
+ *     responses:
+ *       201:
+ *         description: Event created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Event Created
+ *       500:
+ *         description: Internal Server Error
+ */
+
 router.post('/add', async (req, res) => {
 
     const { eventName, date, fromTime, toTime, userId} = req.body;
@@ -15,6 +67,35 @@ router.post('/add', async (req, res) => {
         return res.status(500).send({ message: 'Internal Server Error' });
     }
 })
+
+/**
+ * @swagger
+ * /event/getEvents/{userId}:
+ *   get:
+ *     summary: Get all events for a user
+ *     tags: [Event]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         schema:
+ *           type: string
+ *           required: true
+ *           description: The userId of the user
+ *     responses:
+ *       200:
+ *         description: Returns events
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 events:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Event'
+ *       500:
+ *         description: Internal Server Error 
+*/
 
 router.get('/getEvents/:userId', async (req, res) => {
     const userId = req.params.userId;
