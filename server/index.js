@@ -7,6 +7,10 @@ import bodyParser from'body-parser';
 const app = express();
 const PORT = 3001;
 
+// swagger config
+import swaggerSetup from './swagger.js';
+swaggerSetup(app);
+
 // Database Connection
 mongoose.connect('mongodb://127.0.0.1:27017/schedular-app')
     .then(() => {

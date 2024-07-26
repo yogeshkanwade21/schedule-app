@@ -4,6 +4,60 @@ import User from '../models/user.js';
 import jwt from 'jsonwebtoken';
 const secretPhrase = 'mYsecreTphrasEfoRsecreTtoken';
 
+/** 
+ * @swagger
+ * components:
+ *  schemas:
+ *      User:
+ *          type: object
+ *          properties:
+ *              name:
+ *                  type: string
+ *              email:
+ *                  type: string
+ *              password:
+ *                  type: string
+ *          required:
+ *              - name
+ *              - email
+ *              - password
+ *          example:
+ *              name: Amit
+ *              email: Amit@test
+ *              password: 12345
+ */
+
+/**
+ * @swagger
+ * /user/login:
+ *   post:
+ *     summary: Logs in a user and returns a JWT token
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Login successful
+ *         headers:
+ *           Authorization:
+ *             schema:
+ *               description: JWT token
+ *               type: string
+ *       404:
+ *         description: User not found
+ *       401:
+ *         description: Password mismatch
+ */
+
 router.post('/login', async (req, res) => {
 
     try {
@@ -23,6 +77,46 @@ router.post('/login', async (req, res) => {
     }
 })
 
+/**
+ * @swagger
+ * /user/validateToken:
+ *   post:
+ *     summary: Validates a token
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               token:
+ *                 type: string
+ *                 description: The JWT token to validate
+ *     responses:
+ *       200:
+ *         description: Token is valid
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Token is valid
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                       example: 60d0fe4f5311236168a109ca
+ *                     name:
+ *                       type: string
+ *                       example: John Doe
+ *       401:
+ *         description: Invalid token
+ */
+
 router.post('/validateToken', (req, res) => {
     const token = req.body.token;
     console.log("token in validate token route", token);
@@ -39,6 +133,25 @@ router.post('/validateToken', (req, res) => {
         return res.status(401).send({ message: 'Invalid token' });
     }
 })
+
+/**
+ * @swagger
+ * /user/signup:
+ *   post:
+ *     summary: Creates a new user
+ *     tags: [User]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       201:
+ *         description: User created
+ *       400:
+ *         description: Email already in use
+ */
 
 router.post('/signup', async (req, res) => {
     const { name, email, password } = req.body;
